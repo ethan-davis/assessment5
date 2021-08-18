@@ -2,6 +2,13 @@
 #include "main.h"
 #include "game.h"
 
+/*  Struct:  Node data for LLL
+    Members:
+    *   variables:
+    *      Game: Game class object: data for game entry
+    *	   next: pointer to next node in list
+    *   functions: None
+    */
 struct Node
 {
 	Game* data;

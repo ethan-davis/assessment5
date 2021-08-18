@@ -55,32 +55,73 @@ void Collector::AddEntry()
                 cout << "Enter Rating (5.0 Scale): ";
                 // get int input with range of 1.0 to 5.0
                 tRating = GetDoubleInput(1.0, 5.0);
+
+		// Create new Game class object w/ parameterized constructor
+		Game* obj = new Game(tTitle, tPlatform, tGenre, tYear, tRating);
+		// Add node to LLL
+		CreateNode(obj);
+
                 cout << "\n==Entry Saved!==\n";
                 // Check if user wants to continue adding to collection
                 cout << "Would you like to add another (y/n)? ";
                 Confirm(addAnother);
                 cout << endl;
         } while(addAnother == 'y');
-
-	Game* obj = new Game(tTitle, tPlatform, tGenre, tYear, tRating);
-	AppendToLL(obj);
-
 }
 
-void Collector::AppendToLL(Game* obj)
+/* Purpose: Create new node in LLL and add entry data to it.
+ * Parameters: Game class object
+ */
+void Collector::CreateNode(Game* obj)
 {
+	// Allocate space for new node and assign
+	// to pointer;
 	Node* newNode = new Node;
+	// Set current node to first node
+	Node* current = head;
+	Node* prev = NULL;
+	// Assign node data with entry data
 	newNode->data = obj;
+	// Set node next to NULL (append node)
 	newNode->next = NULL;
 
+	char* newTitle = obj->getTitle();
+	// Set first node to new node if list is empty
 	if(!head)
 	{
-		head = tail = newNode;
+		head = newNode;
 		return;
 	}
-
-	tail->next = newNode;
-	tail = newNode;
+	// loop through list from beginning
+	while(current)
+	{
+		char* currentTitle = current->data->getTitle();
+		// Insert node alphabetically
+		// Check game title against current title in list
+		if(strcmp(currentTitle, newTitle) > 0)
+		{
+			// Set new entry's next data to the current node.
+			// Inserting BEFORE current node.
+			newNode->next = current;
+			// If node previous node is found, insert new node
+			// to beginning of list.
+			if(!prev)
+			{
+				head = newNode;
+			}
+			else	// Insert node AFTER previously looped node
+			{
+				prev->next = newNode;
+			}
+			// Entry added, leave function
+			return;
+		}
+		// update node pointers to continue loop
+		prev = current;
+		current = current->next;
+	}
+	// Append new node if title comes last alphabetically
+	prev->next = newNode;
 }
 
 /* Purpose: Displays a list of all games.
@@ -115,22 +156,65 @@ void Collector::DisplayEntries()
  */
 void Collector::DeleteEntry()
 {
-        char confirmDelete = 'n';
+        char confirm = 'n';
+	char deleteTitle[MAX_CHAR];
         // Alert user if there are no games to remove
         if(!head)
         {
                 cout << "There are no games to delete!" << endl;
                 return;
         }
-        // Prompt user with valid range of indexes
-        //cout << "Enter index to delete (0-" << count - 1 << "): ";  // FIX ME
-        // Confirm game title with user before deletion
-        cout << "Are you sure you want to delete ";
-        cout << " (y/n)? ";
-        Confirm(confirmDelete);
-        if(confirmDelete == 'y')
-        {
-        }
+        // Prompt user to enter title to delete
+	cout << "Enter Title of entry to delete: ";
+	cin.getline(deleteTitle, MAX_CHAR - 1);
+
+	// Set LLL loop pointers
+	Node* current = head;
+	Node* previous = NULL;
+
+	while(current)
+	{
+		// Get current node's title
+		char* currentTitle = current->data->getTitle();
+		// Check for a title match
+		if(strcmp(currentTitle, deleteTitle) == 0)
+		{
+        		// Confirm game title with user before deletion
+        		cout << "Are you sure you want to delete " << deleteTitle;
+        		cout << " (y/n)? ";
+        		Confirm(confirm);
+        		if(confirm == 'y')
+        		{
+				// If node is first in the list (no previous node)
+				// move head to next node. Else set previous node's
+				// next data to the deletion node's next
+				if(!previous)
+				{
+					head = head->next;
+				}	
+				else
+				{
+					previous->next = current->next;
+				}
+				// Delete current node
+				delete current->data;
+				delete current;
+				// deletion complete, leave function
+				return;
+        		}
+        	}
+		// update pointers to continue loop
+		previous = current;
+		current = current->next;
+	}
+	// Node was not found by title, warn user and prompt ask to try again
+	cout << "Could not find: " << deleteTitle << " in collection. Try again? ";
+	Confirm(confirm);
+	// if user selects 'y', call delete function recursively
+	if(confirm == 'y')
+	{
+		DeleteEntry();
+	}
 }
 
 /* Purpose: Allows user to specify a file to write game

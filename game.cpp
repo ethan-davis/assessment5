@@ -16,8 +16,23 @@ Game::Game()
 	rating = 0.0;
 }
 
+/* Purpose: Parameterized Constructor to load game class.
+ *   Initialize member variables.
+ * parameters:
+ *   sTitle: dynamic c string: title of game
+ *   sPlatform: dynamic c string: platform game is on
+ *   sGenre: dynamic c string: genre of game
+ *   sYear: int: year of game release
+ *   sRating: double: user score of game
+ */
 Game::Game(char* sTitle, char* sPlatform, char* sGenre, int sYear, double sRating)
 {
+	// Set dynamic c strings to null to prevent
+	// setters from deleting invalid address
+	title = NULL;
+	platform = NULL;
+	genre = NULL;
+
 	setTitle(sTitle);
 	setPlatform(sPlatform);
 	setGenre(sGenre);
@@ -45,12 +60,20 @@ Game::~Game()
 //Copy constructor
 Game::Game(const Game& cpy)
 {
+	title = NULL;
+	platform = NULL;
+	genre = NULL;
+
 	*this = cpy;
 }
 
 // Operator Overload
 const Game& Game::operator=(const Game& rhs)
 {
+	title = NULL;
+	platform = NULL;
+	genre = NULL;
+
 	if(this != &rhs)
 	{
 		setTitle(rhs.title);
