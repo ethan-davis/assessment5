@@ -1,6 +1,6 @@
-/* collector.cpp - Assessment 4 - Ethan Davis
+/* collector.cpp - Assessment 5 - Ethan Davis
  * This file is the implementation file for
- *  the Collector class.
+ *  the Collector class and LLL.
  */
 
 #include "collector.h"
@@ -147,7 +147,6 @@ void Collector::DisplayEntries()
 		current->data->DisplayDetails();
 		current = current->next;
         }
-        cout << endl;
 }
 
 /* Purpose: Allows user to delete from collection.
@@ -199,6 +198,7 @@ void Collector::DeleteEntry()
 				// Delete current node
 				delete current->data;
 				delete current;
+				cout << "\n== " << deleteTitle << " Deleted! ==\n" << endl;
 				// deletion complete, leave function
 				return;
         		}
@@ -208,7 +208,7 @@ void Collector::DeleteEntry()
 		current = current->next;
 	}
 	// Node was not found by title, warn user and prompt ask to try again
-	cout << "Could not find: " << deleteTitle << " in collection. Try again? ";
+	cout << "Could not find: " << deleteTitle << " in collection. Try again (y/n)? ";
 	Confirm(confirm);
 	// if user selects 'y', call delete function recursively
 	if(confirm == 'y')
@@ -292,9 +292,9 @@ void Collector::ReadFile()
                 inFile.ignore(100, '\n');
                 // Create new object with parameterized constructor
 		Game* obj = new Game(sTitle, sGenre, sPlatform, sYear, sRating);
-		AppendToLL(obj);
+		CreateNode(obj);
         }
         inFile.close();
-        cout << "== Games loaded from " << fileName << " into collection! == \n" << endl;
+        cout << "\n== Games loaded from " << fileName << " into collection! == \n" << endl;
 }
 

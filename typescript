@@ -1,12 +1,36 @@
-Script started on Thu 05 Aug 2021 09:52:41 PM PDT
-ethan.davis@syccuxas01:~/CS162/assessments/assess4> make
-g++ -g -Wall -std=c++11 assess4.o game.o collector.o -o assess4
-ethan.davis@syccuxas01:~/CS162/assessments/assess4> valgrind --tool=memcheck --leak-check=full main[K[K[K[K./assess4 [K
-==26189== Memcheck, a memory error detector
-==26189== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
-==26189== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
-==26189== Command: ./assess4
-==26189== 
+Script started on Wed 18 Aug 2021 12:43:18 PM PDT
+ethan.davis@syccuxas01:~/CS162/assessments/assess5> make
+g++ -g -Wall -std=c++11 assess5.o game.o collector.o -o assess5
+ethan.davis@syccuxas01:~/CS162/assessments/assess5> gdb./[K[K ./assess5 
+[?1034hGNU gdb (GDB) 8.0.1
+Copyright (C) 2017 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-pc-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./assess5...done.
+(gdb) break collector.cpp [K: [K77
+Breakpoint 1 at 0x40256a: file collector.cpp, line 77.
+(gdb) run
+Starting program: /home/student/ethan.davis/CS162/assessments/assess5/assess5 
+warning: File "/usr/local/lib64/libstdc++.so.6.0.22-gdb.py" auto-loading has been declined by your `auto-load safe-path' set to "$debugdir:$datadir/auto-load".
+To enable execution of this file add
+	add-auto-load-safe-path /usr/local/lib64/libstdc++.so.6.0.22-gdb.py
+line to your configuration file "/home/student/ethan.davis/.gdbinit".
+To completely disable this security protection add
+	set auto-load safe-path /
+line to your configuration file "/home/student/ethan.davis/.gdbinit".
+For more information about this security protection see the
+"Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:
+	info "(gdb)Auto-loading safe path"
 
 Welcome to Ethan's Video Game Catalog Program!
 ---------------------------
@@ -20,47 +44,119 @@ Welcome to Ethan's Video Game Catalog Program!
  6) Exit
  Please Enter your Choice: 1
 
-Enter Game Title: Half Life  
-Enter Platform: PC
-Enter Genre: FPS
-Enter Release Year (1970-2021): 1998
-Enter Rating (5.0 Scale): 4.9
-
-==Entry Saved!==
-Would you like to add another (y/n)? y
-
 Enter Game Title: Half Life 2
 Enter Platform: PC
 Enter Genre: FPS
 Enter Release Year (1970-2021): 2004
 Enter Rating (5.0 Scale): 5.0
 
-==Entry Saved!==
-Would you like to add another (y/n)? y
+Breakpoint 1, Collector::CreateNode (this=0x7fffffffe120, obj=0x616c70) at collector.cpp:79
+79		Node* newNode = new Node;
+(gdb) n
+81		Node* current = head;
+(gdb) n
+82		Node* prev = NULL;
+(gdb) n
+84		newNode->data = obj;
+(gdb) n
+86		newNode->next = NULL;
+(gdb) print newNode [K->data-> [Ktitle
+$1 = 0x616ca0 "Half Life 2"
+(gdb) n
+88		char* newTitle = obj->getTitle();
+(gdb) n
+90		if(!head)
+(gdb) print newTitle [K
+$2 = 0x616ca0 "Half Life 2"
+(gdb) continue
+Continuing.
 
-Enter Game Title: Half Life:Alyx^[[D^[[D             Alyx
+==Entry Saved!==
+Would you like to add another (y/n)? n
+
+---------------------------
+|        Main Menu        |
+---------------------------
+ 1) Add Game to Collection
+ 2) Show all Games
+ 3) Delete from Collection
+ 4) Write Collection to a File
+ 5) Add Games from a File
+ 6) Exit
+ Please Enter your Choice: 6
+
+Goodbye!
+[Inferior 1 (process 25255) exited normally]
+(gdb) exit[K[K[K[Kquit
+ethan.davis@syccuxas01:~/CS162/assessments/assess5> valgrind --tool=memcheck --leak-check=full ./assess5 
+==25322== Memcheck, a memory error detector
+==25322== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
+==25322== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
+==25322== Command: ./assess5
+==25322== 
+
+Welcome to Ethan's Video Game Catalog Program!
+---------------------------
+|        Main Menu        |
+---------------------------
+ 1) Add Game to Collection
+ 2) Show all Games
+ 3) Delete from Collection
+ 4) Write Collection to a File
+ 5) Add Games from a File
+ 6) Exit
+ Please Enter your Choice: 1
+
+Enter Game Title: Half Life 2  : Alyx
 Enter Platform: PCVR
-Enter Genre: VR
+Enter Genre: VR Shooter
 Enter Release Year (1970-2021): 2020
 Enter Rating (5.0 Scale): 5.0
 
 ==Entry Saved!==
 Would you like to add another (y/n)? y
 
-Enter Game Title: Ratchet and Clank  :                   atchet and Clank  : A Rift Apart  
-Enter Platform: Playstation 5
-Enter Genre: Action/Adventure
-Enter Release Year (1970-2021): 2021
-Enter Rating (5.0 Scale): 4.3
+Enter Game Title: Myst
+Enter Platform: PC
+Enter Genre: Puzzle
+Enter Release Year (1970-2021): 1993
+Enter Rating (5.0 Scale): 4.6
+
+==Entry Saved!==
+Would you like to add another (y/n)? y
+
+Enter Game Title: Psychonauts
+Enter Platform: Xbox/PX C
+Enter Genre: Platformer  
+Enter Release Year (1970-2021): 2005
+Enter Rating (5.0 Scale): 5.0
+
+==Entry Saved!==
+Would you like to add another (y/n)? y
+
+Enter Game Title: Earthbound  
+Enter Platform: SNES   uper Nintendo
+Enter Genre: RPG
+Enter Release Year (1970-2021): 1994
+Enter Rating (5.0 Scale): 4.2
 
 ==Entry Saved!==
 Would you like to add another (y/n)? y
 
 Enter Game Title: Loom
-Enter Platform: DOS^[[D       MSDOS
+Enter Platform: MSDOS
 Enter Genre: Point and Click
 Enter Release Year (1970-2021): 1990
-Enter Rating (5.0 Scale): 5.0
+Enter Rating (5.0 Scale): 4.8
+
+==Entry Saved!==
+Would you like to add another (y/n)? y
+
+Enter Game Title: Nier: Automata
+Enter Platform: PS laystation 4
+Enter Genre: Action RPG
+Enter Release Year (1970-2021): 2017
+Enter Rating (5.0 Scale): 4.0
 
 ==Entry Saved!==
 Would you like to add another (y/n)? n
@@ -79,98 +175,40 @@ Would you like to add another (y/n)? n
 ---------------------------
 |    Showing All Games    |
 ---------------------------
+Title: Earthbound
+Platform: Super Nintendo
+Genre: RPG
+Release Year: 1994
+Rating: 4.2
 
-=== Index 0 ===
-Title: Half Life
-Platform: PC
-Genre: FPS
-Release Year: 1998
-Rating: 4.9
-
-=== Index 1 ===
-Title: Half Life 2
-Platform: PC
-Genre: FPS
-Release Year: 2004
-Rating: 5
-
-=== Index 2 ===
 Title: Half Life: Alyx
 Platform: PCVR
-Genre: VR
+Genre: VR Shooter
 Release Year: 2020
 Rating: 5
 
-=== Index 3 ===
-Title: Ratchet and Clank: A Rift Apart
-Platform: Playstation 5
-Genre: Action/Adventure
-Release Year: 2021
-Rating: 4.3
-
-=== Index 4 ===
 Title: Loom
 Platform: MSDOS
 Genre: Point and Click
 Release Year: 1990
-Rating: 5
+Rating: 4.8
 
----------------------------
-|        Main Menu        |
----------------------------
- 1) Add Game to Collection
- 2) Show all Games
- 3) Delete from Collection
- 4) Write Collection to a File
- 5) Add Games from a File
- 6) Exit
- Please Enter your Choice: 3
-
-Enter index to delete (0-4): 2
-Are you sure you want to delete Half Life: Alyx (y/n)? y
-Half Life: Alyx deleted from Catalog.
-
----------------------------
-|        Main Menu        |
----------------------------
- 1) Add Game to Collection
- 2) Show all Games
- 3) Delete from Collection
- 4) Write Collection to a File
- 5) Add Games from a File
- 6) Exit
- Please Enter your Choice: 2
-
----------------------------
-|    Showing All Games    |
----------------------------
-
-=== Index 0 ===
-Title: Half Life
+Title: Myst
 Platform: PC
-Genre: FPS
-Release Year: 1998
-Rating: 4.9
+Genre: Puzzle
+Release Year: 1993
+Rating: 4.6
 
-=== Index 1 ===
-Title: Half Life 2
-Platform: PC
-Genre: FPS
-Release Year: 2004
-Rating: 5
+Title: Nier: Automata
+Platform: Playstation 4
+Genre: Action RPG
+Release Year: 2017
+Rating: 4
 
-=== Index 2 ===
-Title: Ratchet and Clank: A Rift Apart
-Platform: Playstation 5
-Genre: Action/Adventure
-Release Year: 2021
-Rating: 4.3
-
-=== Index 3 ===
-Title: Loom
-Platform: MSDOS
-Genre: Point and Click
-Release Year: 1990
+Title: Psychonauts
+Platform: Xbox/PC
+Genre: Platformer
+Release Year: 2005
 Rating: 5
 
 ---------------------------
@@ -184,8 +222,8 @@ Rating: 5
  6) Exit
  Please Enter your Choice: 4
 
-Enter a file name to create: games.txt
-== Game collection saved to: games.txt ==
+Enter a file name to create: games2.txt      collection.txt
+== Game collection saved to: gamecollection.txt ==
 
 ---------------------------
 |        Main Menu        |
@@ -199,28 +237,23 @@ Enter a file name to create: games.txt
  Please Enter your Choice: 6
 
 Goodbye!
-==26189== 
-==26189== HEAP SUMMARY:
-==26189==     in use at exit: 72,704 bytes in 1 blocks
-==26189==   total heap usage: 29 allocs, 28 frees, 81,989 bytes allocated
-==26189== 
-==26189== LEAK SUMMARY:
-==26189==    definitely lost: 0 bytes in 0 blocks
-==26189==    indirectly lost: 0 bytes in 0 blocks
-==26189==      possibly lost: 0 bytes in 0 blocks
-==26189==    still reachable: 72,704 bytes in 1 blocks
-==26189==         suppressed: 0 bytes in 0 blocks
-==26189== Reachable blocks (those to which a pointer was found) are not shown.
-==26189== To see them, rerun with: --leak-check=full --show-reachable=yes
-==26189== 
-==26189== For counts of detected and suppressed errors, rerun with: -v
-==26189== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
-ethan.davis@syccuxas01:~/CS162/assessments/assess4> valgrind --tool=memcheck --leak-check=full ./assess4make[Kvalgrind --tool=memcheck --leak-check=full ./assess4
-==31634== Memcheck, a memory error detector
-==31634== Copyright (C) 2002-2012, and GNU GPL'd, by Julian Seward et al.
-==31634== Using Valgrind-3.8.1 and LibVEX; rerun with -h for copyright info
-==31634== Command: ./assess4
-==31634== 
+==25322== 
+==25322== HEAP SUMMARY:
+==25322==     in use at exit: 72,704 bytes in 1 blocks
+==25322==   total heap usage: 39 allocs, 38 frees, 82,317 bytes allocated
+==25322== 
+==25322== LEAK SUMMARY:
+==25322==    definitely lost: 0 bytes in 0 blocks
+==25322==    indirectly lost: 0 bytes in 0 blocks
+==25322==      possibly lost: 0 bytes in 0 blocks
+==25322==    still reachable: 72,704 bytes in 1 blocks
+==25322==         suppressed: 0 bytes in 0 blocks
+==25322== Reachable blocks (those to which a pointer was found) are not shown.
+==25322== To see them, rerun with: --leak-check=full --show-reachable=yes
+==25322== 
+==25322== For counts of detected and suppressed errors, rerun with: -v
+==25322== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+ethan.davis@syccuxas01:~/CS162/assessments/assess5> ./assess5 
 
 Welcome to Ethan's Video Game Catalog Program!
 ---------------------------
@@ -234,8 +267,9 @@ Welcome to Ethan's Video Game Catalog Program!
  6) Exit
  Please Enter your Choice: 5
 
-Enter the file name to read in: games.txt
-== Games loaded from games.txt into collection! == 
+Enter the file name to read in: gamecollection.txt
+
+== Games loaded from gamecollection.txt into collection! == 
 
 ---------------------------
 |        Main Menu        |
@@ -251,33 +285,100 @@ Enter the file name to read in: games.txt
 ---------------------------
 |    Showing All Games    |
 ---------------------------
+Title: Earthbound
+Platform: RPG
+Genre: Super Nintendo
+Release Year: 1994
+Rating: 4.2
 
-=== Index 0 ===
-Title: Half Life
-Platform: PC
-Genre: FPS
-Release Year: 1998
-Rating: 4.9
-
-=== Index 1 ===
-Title: Half Life 2
-Platform: PC
-Genre: FPS
-Release Year: 2004
+Title: Half Life: Alyx
+Platform: VR Shooter
+Genre: PCVR
+Release Year: 2020
 Rating: 5
 
-=== Index 2 ===
-Title: Ratchet and Clank: A Rift Apart
-Platform: Playstation 5
-Genre: Action/Adventure
-Release Year: 2021
-Rating: 4.3
-
-=== Index 3 ===
 Title: Loom
-Platform: MSDOS
-Genre: Point and Click
+Platform: Point and Click
+Genre: MSDOS
 Release Year: 1990
+Rating: 4.8
+
+Title: Myst
+Platform: Puzzle
+Genre: PC
+Release Year: 1993
+Rating: 4.6
+
+Title: Nier: Automata
+Platform: Action RPG
+Genre: Playstation 4
+Release Year: 2017
+Rating: 4
+
+Title: Psychonauts
+Platform: Platformer
+Genre: Xbox/PC
+Release Year: 2005
+Rating: 5
+
+---------------------------
+|        Main Menu        |
+---------------------------
+ 1) Add Game to Collection
+ 2) Show all Games
+ 3) Delete from Collection
+ 4) Write Collection to a File
+ 5) Add Games from a File
+ 6) Exit
+ Please Enter your Choice: 3
+
+Enter Title of entry to delete: Myst
+Are you sure you want to delete Myst (y/n)? y
+
+== Myst Deleted! ==
+
+---------------------------
+|        Main Menu        |
+---------------------------
+ 1) Add Game to Collection
+ 2) Show all Games
+ 3) Delete from Collection
+ 4) Write Collection to a File
+ 5) Add Games from a File
+ 6) Exit
+ Please Enter your Choice: 2
+
+---------------------------
+|    Showing All Games    |
+---------------------------
+Title: Earthbound
+Platform: RPG
+Genre: Super Nintendo
+Release Year: 1994
+Rating: 4.2
+
+Title: Half Life: Alyx
+Platform: VR Shooter
+Genre: PCVR
+Release Year: 2020
+Rating: 5
+
+Title: Loom
+Platform: Point and Click
+Genre: MSDOS
+Release Year: 1990
+Rating: 4.8
+
+Title: Nier: Automata
+Platform: Action RPG
+Genre: Playstation 4
+Release Year: 2017
+Rating: 4
+
+Title: Psychonauts
+Platform: Platformer
+Genre: Xbox/PC
+Release Year: 2005
 Rating: 5
 
 ---------------------------
@@ -292,23 +393,7 @@ Rating: 5
  Please Enter your Choice: 6
 
 Goodbye!
-==31634== 
-==31634== HEAP SUMMARY:
-==31634==     in use at exit: 72,704 bytes in 1 blocks
-==31634==   total heap usage: 19 allocs, 18 frees, 81,818 bytes allocated
-==31634== 
-==31634== LEAK SUMMARY:
-==31634==    definitely lost: 0 bytes in 0 blocks
-==31634==    indirectly lost: 0 bytes in 0 blocks
-==31634==      possibly lost: 0 bytes in 0 blocks
-==31634==    still reachable: 72,704 bytes in 1 blocks
-==31634==         suppressed: 0 bytes in 0 blocks
-==31634== Reachable blocks (those to which a pointer was found) are not shown.
-==31634== To see them, rerun with: --leak-check=full --show-reachable=yes
-==31634== 
-==31634== For counts of detected and suppressed errors, rerun with: -v
-==31634== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
-ethan.davis@syccuxas01:~/CS162/assessments/assess4> exit
+ethan.davis@syccuxas01:~/CS162/assessments/assess5> exit
 exit
 
-Script done on Thu 05 Aug 2021 09:56:18 PM PDT
+Script done on Wed 18 Aug 2021 12:52:51 PM PDT

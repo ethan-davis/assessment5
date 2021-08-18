@@ -1,8 +1,7 @@
-/* assess4.cpp - Assesssment 4 - Ethan Davis
+/* assess5.cpp - Assesssment 5 - Ethan Davis
  * This program allows the user to catalog
  *   and maintain a collection of video games.
- *   Updated to use dynamic memory c strings
- *   and added a Collector class
+ *   Updated to use Linked Lists instead of arrays
  */
 
 // For constants, includes and function prototypes
